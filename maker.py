@@ -16,9 +16,12 @@ def create_epub(txt_file, output_file, pic_dir="pics"):
         成功返回 True，失敗返回 False
     """
     # === 初始化書籍 ===
+    # === 由 txt 檔名取得書名 ===
+    book_title = os.path.splitext(os.path.basename(txt_file))[0]
+
     book = epub.EpubBook()
-    book.set_identifier("auto_txt_epub")
-    book.set_title("自動產生 EPUB")
+    book.set_identifier("ken_support_epub")
+    book.set_title(book_title)
     book.set_language("zh")
     book.add_author("Auto")
 

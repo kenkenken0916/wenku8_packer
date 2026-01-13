@@ -26,7 +26,7 @@ pip install ebooklib
 將.txt file 放在同一個 dir 執行 interface.py \
 根據要求放入每一本第一張"圖片"連結 要點進去圖片！！！\
 根據不同書可能需要調整章節的偵測 （想想書癡的取名）\
-就不吐槽取名了\
+就不吐槽取名了
 ```python
 #maker.py:79
 pattern2 = re.compile(r'^第[一二三四五六七八九十百千零〇]+卷')
