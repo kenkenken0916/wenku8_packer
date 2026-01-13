@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+venv/
+.env
+
+# EPUB / output
+*.epub
+output/
+dist/
+
+# Downloaded images
+pics/
+images/
+
+# Text input
+*.txt
+
+# OS junk
+.DS_Store
+Thumbs.db
