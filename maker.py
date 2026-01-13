@@ -34,8 +34,7 @@ def create_epub(txt_file, output_file, pic_dir="pics"):
 
     first_pic_num = None
     pre_pics = []       # chap0 用
-    cover_set = False   # 封面是否已設定
-
+    
     # === 工具函式 ===
     def find_image(num):
         for ext, mime in [("png", "image/png"), ("jpg", "image/jpeg"), ("jpeg", "image/jpeg")]:
@@ -70,6 +69,12 @@ def create_epub(txt_file, output_file, pic_dir="pics"):
     current_title = None
     current_html = ""
 
+    #add_image(1)
+    path, ext, _ = find_image(1)
+    if path:
+        with open(path, "rb") as f:
+            book.set_cover(f"cover.{ext}", f.read())
+
     try:
         with open(txt_file, encoding="utf-8") as f:
             for raw in f:
@@ -78,7 +83,7 @@ def create_epub(txt_file, output_file, pic_dir="pics"):
                     continue
 
                 # === 章節 ===
-                pattern = re.compile(r'[（(]插圖\s*(\d+)[）)]')
+                pattern = re.compile(r'插圖\s*(\d+)')
                 pattern2 = re.compile(r'^第[一二三四五六七八九十百千零〇]+卷')
 
                 if pattern2.search(line):
@@ -101,22 +106,10 @@ def create_epub(txt_file, output_file, pic_dir="pics"):
                 elif pattern.search(line):
                     num = int(re.sub(r"\D", "", line))
 
-                    if first_pic_num is None:
-                        first_pic_num = num
-
-                        # 第一張圖當封面
-                        add_image(1)
-                        path, ext, _ = find_image(1)
-                        if path:
-                            with open(path, "rb") as f:
-                                book.set_cover(f"cover.{ext}", f.read())
-                            cover_set = True
-
-                        # 若第一張不是 1，補前圖進 chap0
-                        if num > 1:
-                            for i in range(1, num):
-                                add_image(i)
-                                pre_pics.append(i)
+                    if num > 1:
+                        for i in range(1, num):
+                            add_image(i)
+                            pre_pics.append(i)
                     add_image(num)
 
                     # 插入圖片到章節內
